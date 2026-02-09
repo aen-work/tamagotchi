@@ -48,6 +48,15 @@ function renderPets() {
             <p>Happiness: ${pet.happiness}</p>
             <p>Energy: ${pet.energy}</p>
         `;
+        petCard.button = document.createElement("button");
+        petCard.button.textContent = "Feed";
+        petCard.appendChild(petCard.button);
+        petCard.button = document.createElement("button");
+        petCard.button.textContent = "Play";
+        petCard.appendChild(petCard.button);
+        petCard.button = document.createElement("button");
+        petCard.button.textContent = "Nap";
+        petCard.appendChild(petCard.button);
         petContainer.appendChild(petCard);
     });
 }

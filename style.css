@@ -40,11 +40,6 @@ button:hover {
     width: 50px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    width: 33%;
-}
 
 #nameDisplay {
     font-weight: bold;
@@ -56,7 +51,6 @@ form {
     border: 2px solid #244B38;
     border-radius: 10px;
     padding: 20px;
-    width: 200px;
     text-align: center;
 }
 }
