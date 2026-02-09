@@ -10,21 +10,32 @@
 </head>
 <body>
     <header>
-        <img src="./images/header_desktop.png" alt="header image" id="header-image">
     </header>
     <div class="container">
-    <h1>Tamagotchi pets</h1>
-    <h2>Available for adoption</h2>
-    <img src="images/group.png" alt="All pets" id="all-pets">
-    <br>
-    <div class="select">
-    <label for="petType">Choose a pet:</label>
-    <select name="animalType" id="petType">
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="rabbit">Rabbit</option>
-        <option value="duck">Duck</option>
-    </select>
+        <h1>Tamagotchi pets</h1>
+        <h2>Available for adoption</h2>
+        <img src="images/group.png" alt="All pets" id="all-pets">
+        <br>
+        <div class="select">
+            <label for="petType">Choose a pet:</label>
+            <select name="animalType" id="petType">
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="rabbit">Rabbit</option>
+                <option value="duck">Duck</option>
+            </select>
+        <br>
+        <button id="generateName">Generate petname</button>
+        <div id="nameDisplay">
+            <br>
+            <div class="petNameContainer">
+                <label for="petName">Pet name:</label>
+                <input type="text" id="petName" name="petName">
+                <button id="ok">OK</button>
+            </div>
+            <br>
+            <br>
+        </div>
     <button id="adoptPet">Adopt Pet</button>
     </div>
     <br>

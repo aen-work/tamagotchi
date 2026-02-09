@@ -1,25 +1,34 @@
-class pet {
+class Pet {
+    // Static properties to hold all pets and the maximum number of pets allowed
     static pets = [];
     static maxPets = 4;
-    static petImages = ["images/cat.png", "images/rabbit.png", "images/duck.png", "images/dog.png"]; 
+    static petImages = {
+        cat: "images/cat.png",
+        rabbit: "images/rabbit.png",
+        duck: "images/duck.png",
+        dog: "images/dog.png"
 
-    constructor(name, animalType, fullness, happiness, energy,image) {
+    };
+
+    constructor(name, animalType, fullness, happiness, energy) {
         this.name = name;
         this.animalType = animalType;   
         this.fullness = fullness;
         this.happiness = happiness;
         this.energy = energy;
-        this.image = image;
+        this.image = Pet.petImages[animalType];
     }   
 }
-
 adoptPetBtn = document.getElementById("adoptPet");
 adoptPetBtn.addEventListener("click", () => {
-    if (pet.pets.length < pet.maxPets) {
-        const petName = prompt("Enter a name for your new pet:");
-        const petImage = pet.petImages[pet.pets.length];
-        const newPet = new pet(petName, 50, 50, 50, petImage);
-        pet.pets.push(newPet);
+    if (Pet.pets.length < Pet.maxPets) {
+        const petName = document.getElementById("petName").value;
+        const animalType = document.getElementById("petType").value;
+
+       
+        const newPet = new Pet(petName, animalType, 50, 50, 50);
+
+        Pet.pets.push(newPet);
         renderPets();
     } else {
         alert("You have reached the maximum number of pets!");
@@ -29,7 +38,7 @@ adoptPetBtn.addEventListener("click", () => {
 function renderPets() {
     const petContainer = document.getElementById("petContainer");
     petContainer.innerHTML = "";
-    pet.pets.forEach((pet) => {
+    Pet.pets.forEach((pet) => {
         const petCard = document.createElement("div");
         petCard.classList.add("pet-card");
         petCard.innerHTML = `
