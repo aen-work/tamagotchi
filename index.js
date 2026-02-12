@@ -47,19 +47,44 @@ function renderPets() {
             <p>Fullness: ${pet.fullness}</p>
             <p>Happiness: ${pet.happiness}</p>
             <p>Energy: ${pet.energy}</p>
-        `;
-        petCard.button = document.createElement("button");
-        petCard.button.textContent = "Eat";
-        petCard.appendChild(petCard.button);
-        petCard.button = document.createElement("button");
-        petCard.button.textContent = "Play";
-        petCard.appendChild(petCard.button);
-        petCard.button = document.createElement("button");
-        petCard.button.textContent = "Nap";
-        petCard.appendChild(petCard.button);
-        petContainer.appendChild(petCard);
+        `;});
+    }
 
-        // timer every 10 seconds to decrease energy, fullness and happiness by 10 
+    // Creating eatButton
+    const eatButton = document.createElement("button");
+    eatButton.textContent = "Eat";
+    eatButton.classList.add("eat-button");
+
+    eatButton.addEventListener("click", () => {
+        Pet.fullness = Math.min(100, pet.fullness + 30);
+        Pet.energy = Math.max(0, pet.energy - 15);
+        Pet.happiness = Math.min(100, pet.happiness + 5);
+        renderPets();
+      });
+
+    //Creating PlayButton
+    const playButton = document.createElement("button");
+    playButton.textContent = "Play";
+    playButton.classList.add("play-button");
+
+    playButton.addEventListener("click", () => {
+        Pet.happiness = Math.min(100, pet.happiness + 30);
+        Pet.energy = Math.max(0, pet.energy - 10);
+        Pet.fullness = Math.max(0, pet.fullness - 10);
+        renderPets();
+      });
+    //Creating NapButton
+    const napButton = document.createElement("button");
+    napButton.textContent = "Nap";
+    napButton.classList.add("nap-button");
+
+    napButton.addEventListener("click", () => {
+        Pet.energy = Math.min(100, pet.energy + 40);
+        Pet.happiness = Math.max(0, pet.happiness - 10);
+        Pet.fullness = Math.max(0, pet.fullness - 10);
+        renderPets();
+  });
+// timer every 10 seconds to decrease energy, fullness and happiness by 10 
 let energy = 50;
 let fullness = 50;
 let happiness = 50;
@@ -95,8 +120,4 @@ document.getElementById('eat-button').addEventListener('click', () => {
     energy = Math.max(0, energy - 15);
     happiness = Math.max(0, happiness + 5);
     updateStats();
-}); 
-
-
-    });
-}
+});
