@@ -49,7 +49,7 @@ function renderPets() {
             <p>Energy: ${pet.energy}</p>
         `;
         petCard.button = document.createElement("button");
-        petCard.button.textContent = "Feed";
+        petCard.button.textContent = "Eat";
         petCard.appendChild(petCard.button);
         petCard.button = document.createElement("button");
         petCard.button.textContent = "Play";
@@ -58,5 +58,45 @@ function renderPets() {
         petCard.button.textContent = "Nap";
         petCard.appendChild(petCard.button);
         petContainer.appendChild(petCard);
+
+        // timer every 10 seconds to decrease energy, fullness and happiness by 10 
+let energy = 50;
+let fullness = 50;
+let happiness = 50;
+const energyElement = document.getElementById('energy');
+const fullnessElement = document.getElementById('fullness');
+const happinessElement = document.getElementById('happiness');
+function updateStats() {
+    energyElement.textContent = `${energy}`;
+    fullnessElement.textContent = `${fullness}`;
+    happinessElement.textContent = `${happiness}`;
+}
+setInterval(() => {
+    energy = Math.max(0, energy - 10);
+    fullness = Math.max(0, fullness - 10);
+    happiness = Math.max(0, happiness - 10);
+    updateStats();
+}, 10000);
+// event listeners for buttons
+document.getElementById('nap-button').addEventListener('click', () => {
+    energy = Math.min(100, energy + 40);
+    happiness = Math.max(0, happiness - 10);
+    fullness = Math.max(0, fullness - 10);
+    updateStats();
+});
+document.getElementById('play-button').addEventListener('click', () => {
+    happiness = Math.min(100, happiness + 30);
+    energy = Math.max(0, energy - 10);
+    fullness = Math.max(0, fullness - 10);
+    updateStats();
+});         
+document.getElementById('eat-button').addEventListener('click', () => {
+    fullness = Math.min(100, fullness + 30);
+    energy = Math.max(0, energy - 15);
+    happiness = Math.max(0, happiness + 5);
+    updateStats();
+}); 
+
+
     });
 }
