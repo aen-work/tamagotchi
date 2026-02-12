@@ -47,18 +47,17 @@ function renderPets() {
             <p>Fullness: ${pet.fullness}</p>
             <p>Happiness: ${pet.happiness}</p>
             <p>Energy: ${pet.energy}</p>
-        `;});
-    }
-
+        `;
+    
     // Creating eatButton
     const eatButton = document.createElement("button");
     eatButton.textContent = "Eat";
     eatButton.classList.add("eat-button");
 
     eatButton.addEventListener("click", () => {
-        Pet.fullness = Math.min(100, pet.fullness + 30);
-        Pet.energy = Math.max(0, pet.energy - 15);
-        Pet.happiness = Math.min(100, pet.happiness + 5);
+        pet.fullness = Math.min(100, pet.fullness + 30);
+        pet.energy = Math.max(0, pet.energy - 15);
+        pet.happiness = Math.min(100, pet.happiness + 5);
         renderPets();
       });
 
@@ -68,9 +67,9 @@ function renderPets() {
     playButton.classList.add("play-button");
 
     playButton.addEventListener("click", () => {
-        Pet.happiness = Math.min(100, pet.happiness + 30);
-        Pet.energy = Math.max(0, pet.energy - 10);
-        Pet.fullness = Math.max(0, pet.fullness - 10);
+        pet.happiness = Math.min(100, pet.happiness + 30);
+        pet.energy = Math.max(0, pet.energy - 10);
+        pet.fullness = Math.max(0, pet.fullness - 10);
         renderPets();
       });
     //Creating NapButton
@@ -79,15 +78,13 @@ function renderPets() {
     napButton.classList.add("nap-button");
 
     napButton.addEventListener("click", () => {
-        Pet.energy = Math.min(100, pet.energy + 40);
-        Pet.happiness = Math.max(0, pet.happiness - 10);
-        Pet.fullness = Math.max(0, pet.fullness - 10);
+        pet.energy = Math.min(100, pet.energy + 40);
+        pet.happiness = Math.max(0, pet.happiness - 10);
+        pet.fullness = Math.max(0, pet.fullness - 10);
         renderPets();
+});
   });
 // timer every 10 seconds to decrease energy, fullness and happiness by 10 
-let energy = 50;
-let fullness = 50;
-let happiness = 50;
 const energyElement = document.getElementById('energy');
 const fullnessElement = document.getElementById('fullness');
 const happinessElement = document.getElementById('happiness');
@@ -121,3 +118,4 @@ document.getElementById('eat-button').addEventListener('click', () => {
     happiness = Math.max(0, happiness + 5);
     updateStats();
 });
+}
