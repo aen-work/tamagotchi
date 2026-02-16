@@ -21,7 +21,7 @@ class Pet {
 
 
 const button = document.getElementById("generateName");
-const output = document.getElementById("nameOutput");
+const gName = document.getElementById("petName");
 
 let fetchRandomName = async () => {
     try {
@@ -41,14 +41,13 @@ let fetchRandomName = async () => {
 };
 
 button.addEventListener("click", async () => {
-    output.textContent = "Loading...";
 
     const name = await fetchRandomName();
 
     if (name) {
-        output.textContent = name;
+        petName.value = name;
     } else {
-        output.textContent = "Could not fetch name.";
+        petName.value = "Could not fetch name.";
     }
 });
 
@@ -60,8 +59,6 @@ adoptPetBtn.addEventListener("click", () => {
     if (Pet.pets.length < Pet.maxPets) {
         const petName = document.getElementById("petName").value;
         const animalType = document.getElementById("petType").value;
-
-       
         const newPet = new Pet(petName, animalType, 50, 50, 50);
 
         Pet.pets.push(newPet);
@@ -79,7 +76,7 @@ function renderPets() {
     
     Pet.pets.forEach((pet) => {
         const petCard = document.createElement("div");
-        petCard.classList.add("pet-card");
+        petCard.classList.add("petCard");
 
         petCard.innerHTML = `
             <img src="${pet.image}" alt="${pet.name}" class="pet-image">
@@ -104,7 +101,7 @@ function renderPets() {
           newP.textContent = `${pet.name} ate and is now more full!`;
           history.appendChild(newP);
 
-          renderPets();
+        renderPets();
         });
 
         // Play knapp
@@ -123,7 +120,7 @@ function renderPets() {
           newP.textContent = `${pet.name} played and is now more happy!`;
           history.appendChild(newP);
 
-          renderPets();
+        renderPets();
         });
 
         // Nap button
@@ -161,8 +158,12 @@ setInterval(() => {
         pet.energy = Math.max(0, pet.energy - 10);
         pet.fullness = Math.max(0, pet.fullness - 10);
         pet.happiness = Math.max(0, pet.happiness - 10);
-         if (pet.energy <= 0 || pet.fullness <= 0 || pet.happiness <= 0) {
-            alert(`${pet.name} has run away!`);
+        
+        if (pet.energy <= 0 || pet.fullness <= 0 || pet.happiness <= 0) {
+            document.querySelectorAll("p");
+            petCards.forEach(i => {
+                i.remove();
+});
         }
 
     });
