@@ -1,25 +1,61 @@
 class Pet {
-    // Static properties to hold all pets and the maximum number of pets allowed
+    // Static properties för alla pets, en array för att hålla alla pets, max antal pets och objekt som mappar djurtyper till bilder
     static pets = [];
     static maxPets = 4;
     static petImages = {
-        cat: "images/cat.png",
-        rabbit: "images/rabbit.png",
-        duck: "images/duck.png",
-        dog: "images/dog.png"
-
+      cat: "images/cat.png",
+      rabbit: "images/rabbit.png",
+      duck: "images/duck.png",
+      dog: "images/dog.png"
     };
 
     constructor(name, animalType, fullness, happiness, energy) {
-        this.name = name;
-        this.animalType = animalType;   
-        this.fullness = fullness;
-        this.happiness = happiness;
-        this.energy = energy;
-        this.image = Pet.petImages[animalType];
+      this.name = name;
+      this.animalType = animalType;   
+      this.fullness = fullness;
+      this.happiness = happiness;
+      this.energy = energy;
+      this.image = Pet.petImages[animalType];
     }   
 }
-adoptPetBtn = document.getElementById("adoptPet");
+
+
+const button = document.getElementById("generateName");
+const output = document.getElementById("nameOutput");
+
+let fetchRandomName = async () => {
+    try {
+        const response = await fetch("https://randomuser.me/api/");
+
+        if (!response.ok) {
+            throw new Error("API error");
+        }
+
+        const data = await response.json();
+        return data.results[0].name.first;
+
+    } catch (error) {
+        console.error("Failed to fetch name:", error);
+        return null;
+    }
+};
+
+button.addEventListener("click", async () => {
+    output.textContent = "Loading...";
+
+    const name = await fetchRandomName();
+
+    if (name) {
+        output.textContent = name;
+    } else {
+        output.textContent = "Could not fetch name.";
+    }
+});
+
+
+// Event listener till adopt pet knappen, skapar en ny pet och lägger till den i arrayen om max antal inte är nått, annars visas en alert   
+const adoptPetBtn = document.getElementById("adoptPet");
+
 adoptPetBtn.addEventListener("click", () => {
     if (Pet.pets.length < Pet.maxPets) {
         const petName = document.getElementById("petName").value;
@@ -35,12 +71,16 @@ adoptPetBtn.addEventListener("click", () => {
     }
 });
 
+
+// Funktion för att skriva ut pets på sidan
 function renderPets() {
     const petContainer = document.getElementById("petContainer");
     petContainer.innerHTML = "";
+    
     Pet.pets.forEach((pet) => {
         const petCard = document.createElement("div");
         petCard.classList.add("pet-card");
+
         petCard.innerHTML = `
             <img src="${pet.image}" alt="${pet.name}" class="pet-image">
             <h3>${pet.name}</h3>    
@@ -48,74 +88,89 @@ function renderPets() {
             <p>Happiness: ${pet.happiness}</p>
             <p>Energy: ${pet.energy}</p>
         `;
-    
-    // Creating eatButton
-    const eatButton = document.createElement("button");
-    eatButton.textContent = "Eat";
-    eatButton.classList.add("eat-button");
 
-    eatButton.addEventListener("click", () => {
-        pet.fullness = Math.min(100, pet.fullness + 30);
-        pet.energy = Math.max(0, pet.energy - 15);
-        pet.happiness = Math.min(100, pet.happiness + 5);
-        renderPets();
-      });
+        // Eat knapp
+        const eatButton = document.createElement("button");
+        eatButton.textContent = "Eat";
+        eatButton.addEventListener("click", () => {
+        // Eat ökar fullness med 30, minskar energy med 15 och ökar happiness med 5
+          pet.fullness = Math.min(100, pet.fullness + 30);
+          pet.energy = Math.max(0, pet.energy - 15);
+          pet.happiness = Math.min(100, pet.happiness + 5);
 
-    //Creating PlayButton
-    const playButton = document.createElement("button");
-    playButton.textContent = "Play";
-    playButton.classList.add("play-button");
+        // Lägg till en rad i historiken
+          const history = document.getElementById("history");
+          const newP = document.createElement("p");
+          newP.textContent = `${pet.name} ate and is now more full!`;
+          history.appendChild(newP);
 
-    playButton.addEventListener("click", () => {
-        pet.happiness = Math.min(100, pet.happiness + 30);
+          renderPets();
+        });
+
+        // Play knapp
+        const playButton = document.createElement("button");
+        playButton.textContent = "Play";
+
+        playButton.addEventListener("click", () => {
+        //Play ökar happniess med 30, minskar energy och fullness med 10
+          pet.happiness = Math.min(100, pet.happiness + 30);
+          pet.energy = Math.max(0, pet.energy - 10);
+          pet.fullness = Math.max(0, pet.fullness - 10);
+
+        // Lägg till en rad i historiken
+          const history = document.getElementById("history");
+          const newP = document.createElement("p");
+          newP.textContent = `${pet.name} played and is now more happy!`;
+          history.appendChild(newP);
+
+          renderPets();
+        });
+
+        // Nap button
+        const napButton = document.createElement("button");
+        napButton.textContent = "Nap";
+        napButton.addEventListener("click", () => {
+          pet.energy = Math.min(100, pet.energy + 40);
+          pet.happiness = Math.max(0, pet.happiness - 10);
+          pet.fullness = Math.max(0, pet.fullness - 10);
+
+        // Lägg till en rad i historiken
+          const history = document.getElementById("history");
+          const newP = document.createElement("p");
+          newP.textContent = `${pet.name} took a nap and is now more energetic!`;
+          history.appendChild(newP);
+
+          renderPets();
+        });
+
+
+         // Lägg till knapparna i kortet
+        petCard.appendChild(eatButton);
+        petCard.appendChild(playButton);
+        petCard.appendChild(napButton);
+
+        // Lägg till kortet i containern
+        petContainer.appendChild(petCard);
+    });
+}
+
+
+// Timer som minskar stats var 10:e sekund
+setInterval(() => {
+    Pet.pets.forEach(pet => {
         pet.energy = Math.max(0, pet.energy - 10);
         pet.fullness = Math.max(0, pet.fullness - 10);
-        renderPets();
-      });
-    //Creating NapButton
-    const napButton = document.createElement("button");
-    napButton.textContent = "Nap";
-    napButton.classList.add("nap-button");
-
-    napButton.addEventListener("click", () => {
-        pet.energy = Math.min(100, pet.energy + 40);
         pet.happiness = Math.max(0, pet.happiness - 10);
-        pet.fullness = Math.max(0, pet.fullness - 10);
-        renderPets();
-});
-  });
-// timer every 10 seconds to decrease energy, fullness and happiness by 10 
-const energyElement = document.getElementById('energy');
-const fullnessElement = document.getElementById('fullness');
-const happinessElement = document.getElementById('happiness');
-function updateStats() {
-    energyElement.textContent = `${energy}`;
-    fullnessElement.textContent = `${fullness}`;
-    happinessElement.textContent = `${happiness}`;
-}
-setInterval(() => {
-    energy = Math.max(0, energy - 10);
-    fullness = Math.max(0, fullness - 10);
-    happiness = Math.max(0, happiness - 10);
-    updateStats();
+         if (pet.energy <= 0 || pet.fullness <= 0 || pet.happiness <= 0) {
+            alert(`${pet.name} has run away!`);
+        }
+
+    });
+
+    renderPets();
 }, 10000);
-// event listeners for buttons
-document.getElementById('nap-button').addEventListener('click', () => {
-    energy = Math.min(100, energy + 40);
-    happiness = Math.max(0, happiness - 10);
-    fullness = Math.max(0, fullness - 10);
-    updateStats();
-});
-document.getElementById('play-button').addEventListener('click', () => {
-    happiness = Math.min(100, happiness + 30);
-    energy = Math.max(0, energy - 10);
-    fullness = Math.max(0, fullness - 10);
-    updateStats();
-});         
-document.getElementById('eat-button').addEventListener('click', () => {
-    fullness = Math.min(100, fullness + 30);
-    energy = Math.max(0, energy - 15);
-    happiness = Math.max(0, happiness + 5);
-    updateStats();
-});
-}
+
+
+
+    
+    
