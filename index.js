@@ -98,7 +98,7 @@ function renderPets() {
         // Lägg till en rad i historiken
           const history = document.getElementById("history");
           const newP = document.createElement("p");
-          newP.textContent = `${pet.name} ate and is now more full!`;
+          newP.textContent = `You fed ${pet.name}! Yummy`;
           history.appendChild(newP);
 
         renderPets();
@@ -117,7 +117,7 @@ function renderPets() {
         // Lägg till en rad i historiken
           const history = document.getElementById("history");
           const newP = document.createElement("p");
-          newP.textContent = `${pet.name} played and is now more happy!`;
+          newP.textContent = `You played with ${pet.name}.`;
           history.appendChild(newP);
 
         renderPets();
@@ -134,7 +134,7 @@ function renderPets() {
         // Lägg till en rad i historiken
           const history = document.getElementById("history");
           const newP = document.createElement("p");
-          newP.textContent = `${pet.name} took a nap and is now more energetic!`;
+          newP.textContent = `You took a nap with ${pet.name}.`;
           history.appendChild(newP);
 
           renderPets();
@@ -158,18 +158,12 @@ setInterval(() => {
         pet.energy = Math.max(0, pet.energy - 10);
         pet.fullness = Math.max(0, pet.fullness - 10);
         pet.happiness = Math.max(0, pet.happiness - 10);
-        
-        if (pet.energy <= 0 || pet.fullness <= 0 || pet.happiness <= 0) {
-            document.querySelectorAll("p");
-            petCards.forEach(i => {
-                i.remove();
-});
-        }
 
     });
 
     renderPets();
 }, 10000);
+
 
 
 
