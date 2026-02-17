@@ -53,9 +53,16 @@ button.addEventListener("click", async () => {
 
 
 // Event listener till adopt pet knappen, skapar en ny pet och lägger till den i arrayen om max antal inte är nått, annars visas en alert   
+
+
 const adoptPetBtn = document.getElementById("adoptPet");
 
 adoptPetBtn.addEventListener("click", () => {
+    if (petName.value.trim() === "") {
+    alert("Please enter a name for your pet!");
+    return;
+    } 
+
     if (Pet.pets.length < Pet.maxPets) {
         const petName = document.getElementById("petName").value;
         const animalType = document.getElementById("petType").value;
@@ -98,7 +105,7 @@ function renderPets() {
         // Lägg till en rad i historiken
           const history = document.getElementById("history");
           const newP = document.createElement("p");
-          newP.textContent = `You fed ${pet.name}! Yummy`;
+          newP.textContent = `You fed ${pet.name}. Yummy!`;
           history.appendChild(newP);
 
         renderPets();
@@ -117,7 +124,7 @@ function renderPets() {
         // Lägg till en rad i historiken
           const history = document.getElementById("history");
           const newP = document.createElement("p");
-          newP.textContent = `You played with ${pet.name}.`;
+          newP.textContent = `You played with ${pet.name}. Yay!`;
           history.appendChild(newP);
 
         renderPets();
@@ -134,7 +141,7 @@ function renderPets() {
         // Lägg till en rad i historiken
           const history = document.getElementById("history");
           const newP = document.createElement("p");
-          newP.textContent = `You took a nap with ${pet.name}.`;
+          newP.textContent = `You took a nap with ${pet.name}. Eneryboost!`;
           history.appendChild(newP);
 
         renderPets();

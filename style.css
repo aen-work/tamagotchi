@@ -55,6 +55,20 @@ body {
     text-align: center;
 }
 
+button {
+    background-color: #244B38;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1B3729;
+}
+
 @media (min-width: 400px) {
     .container {
         width: 800px;
