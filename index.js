@@ -151,8 +151,11 @@ function renderPets() {
 
     });
 
+}
+
 // Timer som minskar stats var 10:e sekund
 setInterval(() => {
+    if (Pet.pets.length === 0) return;
     Pet.pets.forEach(pet => {
         pet.energy = Math.max(0, pet.energy - 10);
         pet.fullness = Math.max(0, pet.fullness - 10);
@@ -168,5 +171,4 @@ setInterval(() => {
 renderPets();
     
 }, 10000);
-}
 
