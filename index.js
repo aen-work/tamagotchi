@@ -137,20 +137,19 @@ function renderPets() {
           newP.textContent = `You took a nap with ${pet.name}.`;
           history.appendChild(newP);
 
-          renderPets();
+        renderPets();
         });
 
+        
+        // Lägg till kortet i containern
+        petContainer.appendChild(petCard);
 
          // Lägg till knapparna i kortet
         petCard.appendChild(eatButton);
         petCard.appendChild(playButton);
         petCard.appendChild(napButton);
 
-        // Lägg till kortet i containern
-        petContainer.appendChild(petCard);
     });
-}
-
 
 // Timer som minskar stats var 10:e sekund
 setInterval(() => {
@@ -158,14 +157,16 @@ setInterval(() => {
         pet.energy = Math.max(0, pet.energy - 10);
         pet.fullness = Math.max(0, pet.fullness - 10);
         pet.happiness = Math.max(0, pet.happiness - 10);
-
     });
-
-    renderPets();
+    Pet.pets = Pet.pets.filter(pet => {
+        if (pet.energy === 0 || pet.fullness === 0 || pet.happiness === 0) {
+            alert(`${pet.name} ran away...`);
+            return false;
+            }
+            return true;
+});  
+renderPets();
+    
 }, 10000);
+}
 
-
-
-
-    
-    
