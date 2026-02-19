@@ -26,8 +26,18 @@ class Pet {
             this.happiness = Math.max(0, this.happiness - 10);
             this.energy = Math.max(0, this.energy - 10);
             updateStats();
+
+        // Kolla om något pet har stats som når 0, och ta bort det i så fall
+        Pet.pets = Pet.pets.filter(pet => {
+        if (pet.energy === 0 || pet.fullness === 0 || pet.happiness === 0) {
+            alert(`${pet.name} ran away...`);
+            return false;
+            }
+            return true;
+        });
+
         }, 10000); // Uppdatera varje 10 sekunder   
-        } 
+        }
 
 }
 
@@ -84,7 +94,7 @@ adoptPetBtn.addEventListener("click", () => {
 
     Pet.pets.push(newPet);
 
-    newPet.startTimer(() => renderPets());
+    newPet.startTimer(() => renderPets()); // Starta timer och uppdatera DOM varje gång stats ändras    
 
     renderPets();
     nameInput.value = ""; // rensa input efter adoption
@@ -92,12 +102,6 @@ adoptPetBtn.addEventListener("click", () => {
         alert("You have reached the maximum number of pets!");
     }
 });
-
-
-
-
-
-
 
 // Funktion för att skriva ut pets på sidan
 function renderPets() {
@@ -126,7 +130,7 @@ petContainer.innerHTML = "";
             energyText.textContent = `Energy: ${pet.energy}`;
         }
         updateStats(); // Initial stats
-        
+
         const eatButton = document.createElement("button");
         eatButton.textContent = "Eat";
         eatButton.addEventListener("click", () => {
