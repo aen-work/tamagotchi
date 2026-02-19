@@ -23,12 +23,19 @@ body {
 .container {
     background-color: white;
     border: 2px solid #244B38;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-radius: 10px;
-    width: 400px;
-    text-align: center;
+}
+#petName, #petType {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #244B38;
+    border-radius: 5px;
+    text-align: left;
+    font-weight: bold;
 }
 
 #history {
@@ -37,13 +44,22 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
-    width: 800px;
 }
 
-
-
-#nameDisplay {
+.select {
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
     font-weight: bold;
+    width: 33%;
+
+}
+
+.petNameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 20px;
 }
 
 
@@ -67,11 +83,4 @@ button {
 
 button:hover {
     background-color: #1B3729;
-}
-
-@media (min-width: 400px) {
-    .container {
-        width: 800px;
-        padding: 20px;
-    }
 }
