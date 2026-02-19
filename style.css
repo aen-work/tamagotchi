@@ -1,7 +1,6 @@
 
 /* Style for the Tamagotchi pet adoption page mobile first*/
 header {
-    width: 100%;
     background-color: #244B38;
     color: white;
     display: flex;
@@ -29,6 +28,7 @@ body {
     justify-content: center;
     border-radius: 10px;
     width: 400px;
+    text-align: center;
 }
 
 #history {
